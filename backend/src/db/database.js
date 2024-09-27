@@ -7,7 +7,7 @@ const db = async () => {
       host: "localhost",
       user: "root",
       password: "",
-      database: "prueva",
+      database: "prueba",
       port: 3306,
     });
     const valid = Boolean(conexión);
@@ -20,7 +20,7 @@ const db = async () => {
   } catch (error) {
     console.log(color.blue("----------------------------------------------------------------------------------------------------"));
     console.log();
-    console.log(color.red("error en la conexión de la base de datos"));
+    console.log(color.red("                              error en la conexión de la base de datos"));
     console.log();
     console.log(color.blue("----------------------------------------------------------------------------------------------------"));
     console.log();

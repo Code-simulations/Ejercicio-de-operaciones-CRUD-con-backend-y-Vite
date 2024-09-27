@@ -1,10 +1,11 @@
 import Router from "express";
+import validatorJWT from "../middlewares/validatorJWT.js";
 const routerUser = Router();
-import { login, register } from "../controllers/auth.controlles.js";
+import { closeSession, login, register, session } from "../controllers/controller.js";
 
 routerUser.post("/register", register);
-routerUser.get("/session");
+routerUser.get("/session", validatorJWT, session);
 routerUser.post("/login", login);
-routerUser.post("/logout");
+routerUser.post("/logout", closeSession);
 
 export default routerUser;
