@@ -7,15 +7,9 @@ const db = async () => {
       host: "localhost",
       user: "root",
       password: "",
-      database: "prueba",
+      database: "prueva",
       port: 3306,
     });
-    const valid = Boolean(conexión);
-    if (valid) {
-      console.log(color.blue("----------------------------------------------------------------------------------------------------"));
-      console.log(color.green("                                    connection is successfully"));
-      console.log(color.blue("----------------------------------------------------------------------------------------------------"));
-    }
     return conexión;
   } catch (error) {
     console.log(color.blue("----------------------------------------------------------------------------------------------------"));
@@ -29,4 +23,10 @@ const db = async () => {
     console.log(color.blue("----------------------------------------------------------------------------------------------------"));
   }
 };
+const valid = Boolean(db);
+if (valid) {
+  console.log(color.blue("----------------------------------------------------------------------------------------------------"));
+  console.log(color.green("                                    connection is successfully"));
+  console.log(color.blue("----------------------------------------------------------------------------------------------------"));
+}
 export default db;

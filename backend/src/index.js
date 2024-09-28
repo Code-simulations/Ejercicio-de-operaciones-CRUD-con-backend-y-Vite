@@ -1,15 +1,17 @@
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
-import routerUser from "./routers/index.routes.js";
+import routerUser from "./routers/auth.routes.js";
 import cookieParser from "cookie-parser";
 import color from "chalk";
+import tasksRouter from "./routers/tasks.routes.js";
 const app = express();
 app.use(morgan("dev"));
 app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
-app.use(routerUser);
+app.use("/auth", routerUser);
+app.use("/tasks", tasksRouter);
 
 app.listen(4000, () => {
   console.log(color.blue("----------------------------------------------------------------------------------------------------"));
