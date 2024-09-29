@@ -3,14 +3,14 @@ import color from "chalk";
 
 const db = async () => {
   try {
-    const conexión = await mysql.createConnection({
+    const connection = await mysql.createConnection({
       host: "localhost",
       user: "root",
       password: "",
       database: "prueva",
       port: 3306,
     });
-    return conexión;
+    return connection;
   } catch (error) {
     console.log(color.blue("----------------------------------------------------------------------------------------------------"));
     console.log();
@@ -23,10 +23,15 @@ const db = async () => {
     console.log(color.blue("----------------------------------------------------------------------------------------------------"));
   }
 };
-const valid = Boolean(db);
-if (valid) {
-  console.log(color.blue("----------------------------------------------------------------------------------------------------"));
-  console.log(color.green("                                    connection is successfully"));
-  console.log(color.blue("----------------------------------------------------------------------------------------------------"));
+async function validator() {
+  const connection = await db();
+  const [rows] = await connection.query("SELECT 1 + 1 AS solution");
+  const valid = Boolean(rows);
+  if (valid) {
+    console.log(color.blue("----------------------------------------------------------------------------------------------------"));
+    console.log(color.green("                                    connection is successfully"));
+    console.log(color.blue("----------------------------------------------------------------------------------------------------"));
+  }
 }
+validator();
 export default db;
