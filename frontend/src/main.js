@@ -1,18 +1,20 @@
 import "./assets/style/style.css";
+import { Pagelogin } from "./pages/login.js";
 import { Register } from "./pages/register.js";
+import { listTasks } from "./pages/tasks.js";
 const params = window.location.pathname;
 
 const $index = document.querySelector("#app");
 
 switch (params) {
-  case "/register":
-    $index.appendChild(Register());
+  case "/":
+    $index.appendChild(await Register());
     break;
   case "/login":
-    $index.innerHTML = `<h1>LOGIN</h1>`;
+    $index.appendChild(await Pagelogin());
     break;
   case "/tasks":
-    $index.innerHTML = `<h1>TASKS</h1>`;
+    $index.appendChild(await listTasks());
     break;
 
   default:
