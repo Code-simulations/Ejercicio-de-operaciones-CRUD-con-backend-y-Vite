@@ -9,7 +9,7 @@ export const HedaerTasks = async () => {
   $header.classList.add("flex", "flex-row", "bg-blue-400", "justify-between", "h-14", "items-center", "px-8");
   const $title = document.createElement("h1");
   $title.classList.add("font-bold", "text-2xl");
-  $title.textContent = "tareas";
+  $title.textContent = "Panel de tareas";
   if (session.ok) {
     const $link = document.createElement("button");
     $link.textContent = "cerrar session";

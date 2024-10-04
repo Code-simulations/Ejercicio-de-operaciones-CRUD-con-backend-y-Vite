@@ -1,3 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.fixed-size {
+  @apply w-1/2 h-full; /* Fija ancho y altura */
+}
