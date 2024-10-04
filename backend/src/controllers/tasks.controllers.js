@@ -11,8 +11,6 @@ export const taskGetter = async (req, res) => {
 
     const [rows] = await connection.query(sql, idUser);
 
-    if (rows.length === 0) return res.status(200).json({ message: "no hay tareas para mostrar " });
-
     res.status(200).json(rows);
   } catch (error) {
     console.log(color.blue("----------------------------------------------------------------------------------------------------"));

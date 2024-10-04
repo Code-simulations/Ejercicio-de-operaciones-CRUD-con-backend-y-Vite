@@ -1,9 +1,10 @@
+import Swal from "sweetalert2";
+
 export const HedaerTasks = async () => {
   const session = await fetch("http://localhost:4000/auth/session", {
     credentials: "include",
   });
   const response = await session.json();
-  console.log(response);
 
   const $header = document.createElement("header");
   $header.classList.add("flex", "flex-row", "bg-blue-400", "justify-between", "h-14", "items-center", "px-8");
@@ -15,15 +16,23 @@ export const HedaerTasks = async () => {
     $link.textContent = "cerrar session";
     $link.addEventListener("click", async () => {
       const logout = await fetch("http://localhost:4000/auth/logout", {
+        method: "POST",
         credentials: "include",
       });
-      if (logout.ok) {
-        window.location.reload();
-      }
+      const res = await logout.json();
+      await Swal.fire({
+        icon: "success",
+        title: res.message,
+        confirmButtonText: "ok",
+        backdrop: false,
+      });
+      window.location.href = "http://localhost:5173/login";
     });
+    $header.append($link);
   } else {
     window.location.href = "http://localhost:5173/login";
   }
+
   $header.append($title);
   return $header;
 };

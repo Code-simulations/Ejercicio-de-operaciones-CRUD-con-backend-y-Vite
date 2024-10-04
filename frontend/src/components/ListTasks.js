@@ -30,10 +30,80 @@ export const ListTasks = () => {
       });
 
       const res = await singDelete.json();
-      console.log(res);
+      Swal.fire({
+        title: res.message,
+        icon: "success",
+        confirmButtonText: "ok",
+        backdrop: false,
+      });
       getAllTasks();
     } catch (error) {
       console.error("Error al eliminar la tarea", error);
+    }
+  };
+
+  const updatedTask = async (taskId) => {
+    try {
+      Swal.fire({
+        title: "Completa tu información",
+        html: `
+          <input id="swal-input1" class="swal2-input" placeholder="titulo">
+          <input id="swal-input2" class="swal2-input" placeholder="descripción">
+          <div style="text-align: left; margin-top: 10px;">
+            <input type="checkbox" id="swal-checkbox" class='ml-28'>
+            <label for="swal-checkbox">marca si se completo o no </label>
+          </div>
+        `,
+        focusConfirm: false,
+        showCancelButton: true,
+        confirmButtonText: "Enviar",
+        backdrop: false,
+        preConfirm: () => {
+          const titulo = document.getElementById("swal-input1").value;
+          const descripcion = document.getElementById("swal-input2").value;
+          const isCompleted = document.getElementById("swal-checkbox").checked;
+
+          if (!titulo || !descripcion) {
+            Swal.showValidationMessage("Por favor, llena los campos de nombre y apellido");
+          } else {
+            return {
+              titulo: titulo,
+              descripcion: descripcion,
+              isCompleted: isCompleted,
+            };
+          }
+        },
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          console.log(`Nombre: ${result.value.titulo}`);
+          console.log(`Apellido: ${result.value.descripcion}`);
+          console.log(`Acepta términos: ${result.value.isCompleted}`);
+          const singUpdate = await fetch(`http://localhost:4000/tasks/${taskId}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+            body: JSON.stringify({ title: result.value.titulo, description: result.value.descripcion, status: result.value.isCompleted }),
+          });
+
+          const res = await singUpdate.json();
+          if (singUpdate.ok) {
+            Swal.fire({
+              title: res.message,
+              icon: "success",
+              cancelButtonText: "ok",
+              backdrop: false,
+            });
+          } else {
+          }
+          console.log(res);
+
+          getAllTasks();
+        }
+      });
+    } catch (error) {
+      console.error("Error al editar la tarea", error);
     }
   };
 
@@ -63,7 +133,10 @@ export const ListTasks = () => {
       // Añadir evento de eliminación directamente aquí
       const deleteButton = taskElement.querySelector(`#btn-dtl-${element.id}`);
       deleteButton.addEventListener("click", () => deleteTasks(element.id));
-
+      const updatedButton = taskElement.querySelector(`#btn-${element.id}`);
+      updatedButton.addEventListener("click", () => {
+        updatedTask(element.id);
+      });
       $tasks.appendChild(taskElement);
     });
   };

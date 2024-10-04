@@ -33,13 +33,21 @@ export const FormLogin = () => {
       });
 
       const result = await response.json();
-      console.log(result);
-
+      if (!response.ok) {
+        return await Swal.fire({
+          title: "no se pudo iniciar sesión",
+          text: result.message || "Acceso denegado",
+          icon: "error",
+          confirmButtonText: "OK",
+          backdrop: false,
+        });
+      }
       await Swal.fire({
         title: "Iniciando sesión",
         text: result.message || "Acceso concedido a sus tareas",
         icon: "success",
         confirmButtonText: "OK",
+        backdrop: false,
       });
 
       window.location.href = "http://localhost:5173/tasks";

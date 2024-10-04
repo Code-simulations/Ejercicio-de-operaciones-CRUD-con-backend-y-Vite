@@ -7,7 +7,7 @@ const db = async () => {
       host: "localhost",
       user: "root",
       password: "",
-      database: "prueva",
+      database: "prueba",
       port: 3306,
     });
     return connection;
